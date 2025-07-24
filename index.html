@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de Calistenia</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e2f;
+      color: #ffffff;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #2a2a3b;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ff88;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background-color: #00ff88;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      background-color: #12121b;
+      padding: 15px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Calculadora de Calistenia</h1>
+
+    <label for="peso">Peso (kg):</label>
+    <input type="number" id="peso" placeholder="Ej: 70" />
+
+    <label for="altura">Altura (cm):</label>
+    <input type="number" id="altura" placeholder="Ej: 175" />
+
+    <label for="flexiones">Flexiones completadas:</label>
+    <input type="number" id="flexiones" placeholder="Ej: 20" />
+
+    <label for="dominadas">Dominadas completadas:</label>
+    <input type="number" id="dominadas" placeholder="Ej: 8" />
+
+    <label for="tiempo">Tiempo de entrenamiento (minutos):</label>
+    <input type="number" id="tiempo" placeholder="Ej: 30" />
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div class="result" id="resultado"></div>
+  </div>
+
+  <script>
+    function calcular() {
+      const peso = parseFloat(document.getElementById("peso").value);
+      const altura = parseFloat(document.getElementById("altura").value) / 100;
+      const flexiones = parseInt(document.getElementById("flexiones").value);
+      const dominadas = parseInt(document.getElementById("dominadas").value);
+      const tiempo = parseInt(document.getElementById("tiempo").value);
+
+      if (isNaN(peso) || isNaN(altura) || isNaN(flexiones) || isNaN(dominadas) || isNaN(tiempo)) {
+        document.getElementById("resultado").innerHTML = "⚠️ Por favor, completa todos los campos.";
+        return;
+      }
+
+      const imc = (peso / (altura * altura)).toFixed(2);
+      const calorias = Math.round(tiempo * 8);
+
+      let nivel = "Principiante";
+      if (flexiones >= 30 && dominadas >= 10) {
+        nivel = "Avanzado";
+      } else if (flexiones >= 20 || dominadas >= 5) {
+        nivel = "Intermedio";
+      }
+
+      document.getElementById("resultado").innerHTML = `
+        <h3>Resultados:</h3>
+        <p><strong>IMC:</strong> ${imc}</p>
+        <p><strong>Calorías quemadas:</strong> ${calorias} kcal</p>
+        <p><strong>Nivel estimado:</strong> ${nivel}</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
